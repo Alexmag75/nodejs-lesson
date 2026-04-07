@@ -14,6 +14,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory"><![CDATA[{
@@ -42,7 +47,7 @@
     "Node.js.index.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "hw/hw1",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Front-end/Записи/уроки/Node_JS/nodeJs-lesson",
     "node.js.detected.package.eslint": "true",
@@ -76,7 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775547625710</updated>
       <workItem from="1775547626763" duration="1759000" />
-      <workItem from="1775549880760" duration="18768000" />
+      <workItem from="1775549880760" duration="21324000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
@@ -102,7 +107,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775572086977</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="07_04">
+      <option name="closed" value="true" />
+      <created>1775577200786</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1775577200786</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
