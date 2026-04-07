@@ -102,20 +102,51 @@
 
 //работа с большими файлами
 
-const path = require('node:path');
-const pathToFile=path.join(__dirname,'8-inform-korshunova.pdf');
-const fs = require('node:fs');
-async function fsProm() {
+// const path = require('node:path');
+// const pathToFile=path.join(__dirname,'8-inform-korshunova.pdf');
+// const fs = require('node:fs');
+// async function fsProm() {
+//
+//     const readStream=fs.createReadStream(pathToFile);
+//     const writeStream=fs.createWriteStream(path.join(__dirname,'8-inform.pdf'));
+//
+//     readStream.on('data', (chunk) => {
+//         console.log('chunk', chunk.length);
+//         writeStream.write(chunk);
+//
+//     })
+//        //readStream.pipe(writeStream);
+// }
+// void fsProm();
 
-    const readStream=fs.createReadStream(pathToFile);
-    const writeStream=fs.createWriteStream(path.join(__dirname,'8-inform.pdf'));
+// Event
 
-    readStream.on('data', (chunk) => {
-        console.log('chunk', chunk.length);
-        writeStream.write(chunk);
+// const EventEmitter=require('node:events');
+// const emitter = new EventEmitter();
+//
+// async function fsProm() {
+//
+//     // emitter.on('event', ()=>{
+//     //     console.log('event happened');
+//     // })
+//
+//     // emitter.once('event', ()=>{
+//     //     console.log('event 1 happened');
+//     // })
+//     emitter.on('event', ()=>{
+//         console.log('event 2 happened');
+//     })
+//     emitter.emit('event');
+//
+// }
+// void fsProm();
 
-    })
-       //readStream.pipe(writeStream);
-}
-void fsProm();
+//os
+
+// const os=require('node:os');
+// const {exec}=require('child_process');
+// async function fsProm() {
+//     console.log(os.arch());
+// }
+// void fsProm();
 
