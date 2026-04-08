@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
-import {handleError, read, write} from "./fs.service";
 import { IUser } from "./interfaces/user.interface";
+import {handleError} from "./errors/errors";
+import {read, write} from "./fs.service";
 
 const app = express();
 app.use(express.json());

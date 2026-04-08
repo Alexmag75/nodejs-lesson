@@ -1,7 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { IUser } from "./interfaces/user.interface";
-import {Response} from "express";
 
 const pathToFile = path.join(process.cwd(), "db.json");
 
@@ -30,7 +29,3 @@ const write = async (users: IUser[]): Promise<void> => {
 
 export { read, write };
 
-export const handleError = (res: Response, e: unknown, defaultMessage: string) => {
-    const message = e instanceof Error ? e.message : defaultMessage;
-    res.status(500).send(message);
-};
