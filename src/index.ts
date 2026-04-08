@@ -3,7 +3,6 @@ import {handleError, read, write} from "./fs.service";
 import { IUser } from "./interfaces/user.interface";
 
 const app = express();
-
 app.use(express.json());
 
 app.get('/users', async (req: Request, res: Response) => {
