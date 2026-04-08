@@ -1,25 +1,36 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type {IUser} from "./interfaces/user.interface";
+import type { IUser } from "./interfaces/user.interface";
+import {Response} from "express";
 
+const pathToFile = path.join(process.cwd(), "db.json");
 
 const read = async (): Promise<IUser[]> => {
     try {
-        const pathToFile = path.join(process.cwd(), "db.json");
         const data = await fs.readFile(pathToFile, "utf-8");
         return data ? JSON.parse(data) : [];
     } catch (e) {
-        console.log("Ошибка записи", e.message);
+        if ((e as any).code === 'ENOENT') {
+            return [];
+        }
+        const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
+        console.error("Ошибка чтения:", errorMessage);
+        return [];
     }
 };
 
 const write = async (users: IUser[]): Promise<void> => {
     try {
-        const pathToFile = path.join(process.cwd(), "db.json");
-        await fs.writeFile(pathToFile, JSON.stringify(users));
+        await fs.writeFile(pathToFile, JSON.stringify(users, null, 2));
     } catch (e) {
-        console.log("Ошибка записи", e.message);
+        const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
+        console.error("Ошибка записи:", errorMessage);
     }
 };
 
 export { read, write };
+
+export const handleError = (res: Response, e: unknown, defaultMessage: string) => {
+    const message = e instanceof Error ? e.message : defaultMessage;
+    res.status(500).send(message);
+};

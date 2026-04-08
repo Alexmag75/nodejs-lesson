@@ -1,49 +1,41 @@
-
-import {read, write} from "./fs.service";
-import express from "express";
-
+import express, { Request, Response } from "express";
+import {handleError, read, write} from "./fs.service";
+import { IUser } from "./interfaces/user.interface";
 
 const app = express();
 
 app.use(express.json());
 
-
-app.get('/users', async (req, res) => {
+app.get('/users', async (req: Request, res: Response) => {
     try {
         const users = await read();
         res.send(users);
     } catch (e) {
-        res.status(500).send("Ошибка чтения базы данных");
+        handleError(res, e, "Ошибка чтения базы данных");
     }
 });
 
-
-app.post('/users', async (req, res) => {
+app.post('/users', async (req: Request, res: Response) => {
     try {
-        const { name, email, password, age } = req.body;
+        const { name, email, password } = req.body;
         const users = await read();
 
         if (!name || name.length <= 3) {
             return res.status(400).send("Имя должно быть длиннее 3 символов");
         }
-        if (age === undefined || age < 0) {
-            return res.status(400).send("Возраст не может быть меньше 0");
-        }
-
         const id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
-        const newUser = { id, name, email, password, age };
+        const newUser: IUser = { id, name, email, password };
 
         users.push(newUser);
         await write(users);
 
         res.status(201).send(newUser);
     } catch (e) {
-        res.status(500).send(e.message);
+        handleError(res, e, "Ошибка при создании пользователя");
     }
 });
 
-
-app.get('/users/:userId', async (req, res) => {
+app.get('/users/:userId', async (req: Request, res: Response) => {
     try {
         const users = await read();
         const user = users.find(u => u.id === Number(req.params.userId));
@@ -52,23 +44,19 @@ app.get('/users/:userId', async (req, res) => {
 
         res.send(user);
     } catch (e) {
-        res.status(500).send(e.message);
+        handleError(res, e, "Ошибка при поиске пользователя");
     }
 });
 
-
-app.put('/users/:userId', async (req, res) => {
+app.put('/users/:userId', async (req: Request, res: Response) => {
     try {
-        const { name, age, email, password } = req.body;
+        const { name, email, password } = req.body;
         const users = await read();
         const index = users.findIndex(u => u.id === Number(req.params.userId));
 
         if (index === -1) return res.status(404).send("Пользователь не найден");
 
-
         if (name && name.length <= 3) return res.status(400).send("Новое имя слишком короткое");
-        if (age !== undefined && age < 0) return res.status(400).send("Возраст не может быть отрицательным");
-
 
         users[index] = {
             ...users[index],
@@ -80,12 +68,11 @@ app.put('/users/:userId', async (req, res) => {
         await write(users);
         res.send(users[index]);
     } catch (e) {
-        res.status(500).send(e.message);
+        handleError(res, e, "Ошибка при обновлении пользователя");
     }
 });
 
-
-app.delete('/users/:userId', async (req, res) => {
+app.delete('/users/:userId', async (req: Request, res: Response) => {
     try {
         let users = await read();
         const userId = Number(req.params.userId);
@@ -98,7 +85,7 @@ app.delete('/users/:userId', async (req, res) => {
 
         res.sendStatus(204);
     } catch (e) {
-        res.status(500).send(e.message);
+        handleError(res, e, "Ошибка при удалении пользователя");
     }
 });
 
