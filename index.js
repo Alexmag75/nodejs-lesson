@@ -27,18 +27,15 @@ app.get('/users', async (req, res) => {
 
 app.post('/users', async (req, res) => {
     try {
-        const { name, email, password, age } = req.body;
+        const { name, email, password} = req.body;
         const users = await readDB();
 
         if (!name || name.length <= 3) {
             return res.status(400).send("Имя должно быть длиннее 3 символов");
         }
-        if (age === undefined || age < 0) {
-            return res.status(400).send("Возраст не может быть меньше 0");
-        }
 
         const id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
-        const newUser = { id, name, email, password, age };
+        const newUser = { id, name, email, password};
 
         users.push(newUser);
         await writeDB(users);
@@ -66,21 +63,19 @@ app.get('/users/:userId', async (req, res) => {
 
 app.put('/users/:userId', async (req, res) => {
     try {
-        const { name, age, email, password } = req.body;
+        const { name, email, password } = req.body;
         const users = await readDB();
         const index = users.findIndex(u => u.id === Number(req.params.userId));
 
         if (index === -1) return res.status(404).send("Пользователь не найден");
 
-
         if (name && name.length <= 3) return res.status(400).send("Новое имя слишком короткое");
-        if (age !== undefined && age < 0) return res.status(400).send("Возраст не может быть отрицательным");
+
 
 
         users[index] = {
             ...users[index],
             name: name || users[index].name,
-            age: age !== undefined ? age : users[index].age,
             email: email || users[index].email,
             password: password || users[index].password
         };
