@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="08-04 les4">
-      <change afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
+    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="09-04 les4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/errors/errors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors/errors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fs.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/fs.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/errors/errors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors/api-error.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/user.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/user.interface.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +86,7 @@
       <recent name="D:\Front-end\Записи\уроки\Node_JS\nodeJs-lesson" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.lint">
+  <component name="RunManager" selected="npm.start:dev">
     <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -115,8 +109,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.lint" />
         <item itemvalue="npm.start:dev" />
+        <item itemvalue="npm.lint" />
       </list>
     </recent_temporary>
   </component>
@@ -135,7 +129,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775547625710</updated>
       <workItem from="1775547626763" duration="1759000" />
-      <workItem from="1775549880760" duration="45553000" />
+      <workItem from="1775549880760" duration="48051000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
@@ -241,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775672496269</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="09-04 les4">
+      <option name="closed" value="true" />
+      <created>1775722120087</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1775722120087</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +262,7 @@
     <MESSAGE value="hw2" />
     <MESSAGE value="08-04" />
     <MESSAGE value="08-04 les4" />
-    <option name="LAST_COMMIT_MESSAGE" value="08-04 les4" />
+    <MESSAGE value="09-04 les4" />
+    <option name="LAST_COMMIT_MESSAGE" value="09-04 les4" />
   </component>
 </project>
