@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { ApiError } from "./errors/api-error";
 import { userRouter } from "./routers/user.rotuter";
+import { configs } from "./config/configs";
 
 const app = express();
 app.use(express.json());
@@ -15,4 +16,8 @@ process.on("uncaughtException", (error: Error) => {
   console.error("uncaughtException", error.message, error.stack);
   process.exit(1);
 });
-app.listen(3000, () => console.log("Server OK on port 3000"));
+app.listen(configs.APP_PORT, () =>
+  console.log(
+    `Server is running on http://${configs.APP_HOST}:${configs.APP_PORT}`,
+  ),
+);
