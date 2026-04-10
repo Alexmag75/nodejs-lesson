@@ -4,7 +4,6 @@ import { userRouter } from "./routers/user.rotuter";
 
 const app = express();
 app.use(express.json());
-
 app.use("/users", userRouter);
 
 app.use((error: ApiError, req: Request, res: Response) => {
