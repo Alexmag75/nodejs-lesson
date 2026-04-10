@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="09-04 les4">
+      <change afterPath="$PROJECT_DIR$/src/controllers/user.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/repositories/user.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routers/user.rotuter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/errors/errors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/errors/api-error.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fs.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/fs.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,6 +86,7 @@
       <recent name="D:\Front-end\Записи\уроки\Node_JS\nodeJs-lesson" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Front-end\Записи\уроки\Node_JS\nodeJs-lesson\src\services" />
       <recent name="D:\Front-end\Записи\уроки\Node_JS\nodeJs-lesson\src" />
       <recent name="D:\Front-end\Записи\уроки\Node_JS\nodeJs-lesson" />
     </key>
@@ -129,7 +134,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775547625710</updated>
       <workItem from="1775547626763" duration="1759000" />
-      <workItem from="1775549880760" duration="48051000" />
+      <workItem from="1775549880760" duration="60301000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
@@ -243,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775722120087</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="09-04 les4">
+      <option name="closed" value="true" />
+      <created>1775724777428</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1775724777428</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +264,6 @@
     <option name="exactExcludedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/fs.service.js" />
         <option value="$PROJECT_DIR$/src/interfaces/user.interface.js" />
       </list>
     </option>
