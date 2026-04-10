@@ -8,8 +8,8 @@ const read = async (): Promise<IUser[]> => {
   try {
     const data = await fs.readFile(pathToFile, "utf-8");
     return data ? JSON.parse(data) : [];
-  } catch (e) {
-    if ((e as any).code === "ENOENT") {
+  } catch (e: unknown) {
+    if ((e as Record<string, any>).code === "ENOENT") {
       return [];
     }
     const errorMessage = e instanceof Error ? e.message : "Неизвестная ошибка";
@@ -17,7 +17,6 @@ const read = async (): Promise<IUser[]> => {
     return [];
   }
 };
-
 const write = async (users: IUser[]): Promise<void> => {
   try {
     await fs.writeFile(pathToFile, JSON.stringify(users, null, 2));
