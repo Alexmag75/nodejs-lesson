@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+
 import { IUser } from "../interfaces/user.interface";
 import { userService } from "../services/user.service";
 
@@ -24,7 +25,7 @@ class UserController {
 
   public async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const userId = Number(req.params.userId);
+      const userId = req.params.userId as string;
       const result = await userService.getById(userId);
       res.json(result);
     } catch (e) {
@@ -32,21 +33,21 @@ class UserController {
     }
   }
 
-  public async update(req: Request, res: Response, next: NextFunction) {
+  public async updateById(req: Request, res: Response, next: NextFunction) {
     try {
-      const userId = Number(req.params.userId);
-      const dto = req.body as Partial<IUser>;
-      const result = await userService.update(userId, dto);
+      const userId = req.params.userId as string;
+      const dto = req.body as IUser;
+      const result = await userService.updateById(userId, dto);
       res.json(result);
     } catch (e) {
       next(e);
     }
   }
 
-  public async delete(req: Request, res: Response, next: NextFunction) {
+  public async deleteById(req: Request, res: Response, next: NextFunction) {
     try {
-      const userId = Number(req.params.userId);
-      await userService.delete(userId);
+      const userId = req.params.userId as string;
+      await userService.deleteById(userId);
       res.sendStatus(204);
     } catch (e) {
       next(e);

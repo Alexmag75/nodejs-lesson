@@ -26,7 +26,7 @@ class UserService {
     return await userRepository.create(dto);
   }
 
-  public async getById(userId: number): Promise<IUser> {
+  public async getById(userId: string): Promise<IUser> {
     const user = await userRepository.getById(userId);
     if (!user) {
       throw new ApiError("Пользователь не найден", 404);
@@ -34,24 +34,28 @@ class UserService {
     return user;
   }
 
-  public async update(userId: number, dto: Partial<IUser>): Promise<IUser> {
-    // Валидация имени, если оно пришло
+  public async updateById(userId: string, dto: Partial<IUser>): Promise<IUser> {
     if (dto.name && dto.name.length < 3) {
       throw new ApiError("Новое имя слишком короткое", 400);
     }
-
-    const updatedUser = await userRepository.update(userId, dto);
-    if (!updatedUser) {
-      throw new ApiError("Пользователь не найден", 404);
+    if (!dto.email || !dto.email.includes("@")) {
+      throw new ApiError(
+        "Адрес электронной почты обязателен и должен существовать",
+        400,
+      );
     }
-    return updatedUser;
+
+    return await userRepository.create(dto as IUser);
   }
 
-  public async delete(userId: number): Promise<void> {
-    const isDeleted = await userRepository.delete(userId);
-    if (!isDeleted) {
+  public async deleteById(userId: string): Promise<IUser> {
+    const deletedUser = await userRepository.deleteById(userId);
+
+    if (!deletedUser) {
       throw new ApiError("Некого удалять, юзер не найден", 404);
     }
+
+    return deletedUser;
   }
 }
 

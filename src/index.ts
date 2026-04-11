@@ -17,9 +17,9 @@ process.on("uncaughtException", (error: Error) => {
   console.error("uncaughtException", error.message, error.stack);
   process.exit(1);
 });
-app.listen(configs.APP_PORT, () => {
+app.listen(configs.APP_PORT, async () => {
   try {
-    mongoose.connect(configs.MONGO_URI!);
+    await mongoose.connect(configs.MONGO_URI!);
     console.log("Подключено к MongoDB");
     console.log(
       `Сервер работает на http://${configs.APP_HOST}:${configs.APP_PORT}`,
