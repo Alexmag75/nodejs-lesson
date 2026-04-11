@@ -38,14 +38,15 @@ class UserService {
     if (dto.name && dto.name.length < 3) {
       throw new ApiError("Новое имя слишком короткое", 400);
     }
-    if (!dto.email || !dto.email.includes("@")) {
-      throw new ApiError(
-        "Адрес электронной почты обязателен и должен существовать",
-        400,
-      );
+    if (dto.email && !dto.email.includes("@")) {
+      throw new ApiError("Некорректный формат email", 400);
+    }
+    const updatedUser = await userRepository.updateById(userId, dto as IUser);
+    if (!updatedUser) {
+      throw new ApiError("Пользователь не найден", 404);
     }
 
-    return await userRepository.create(dto as IUser);
+    return updatedUser;
   }
 
   public async deleteById(userId: string): Promise<IUser> {
