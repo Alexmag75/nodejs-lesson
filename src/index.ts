@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { ApiError } from "./errors/api-error";
-import { userRouter } from "./routers/user.rotuter";
+import { userRouter } from "./routers/user.router";
 import { configs } from "./config/configs";
 import * as mongoose from "mongoose";
 import { authRouter } from "./routers/auth.router";
@@ -12,7 +12,9 @@ app.use("/auth", authRouter);
 app.use("/users", userRouter);
 
 app.use((error: ApiError, req: Request, res: Response) => {
-  res.status(error.status || 500).send(error.message);
+  res.status(error.status || 500).json({
+    message: error.message || "Unknown error",
+  });
 });
 
 process.on("uncaughtException", (error: Error) => {

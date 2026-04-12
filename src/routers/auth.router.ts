@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { UserValidator } from "../validators/user.validator";
 import { commonMiddleware } from "../middleware/CommonMiddleware";
-import { authController } from "../controllers/auch.controler";
+import { authController } from "../controllers/auth.controller";
 
 const router = Router();
 

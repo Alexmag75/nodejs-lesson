@@ -5,29 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="Lesson 12_04">
-      <change afterPath="$PROJECT_DIR$/src/controllers/auch.controler.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/enums/token-type.enum.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interfaces/token.interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/middleware/auth.middleware.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/token.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/repositories/token.repository.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routers/auth.router.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/password.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/token.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/configs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/configs.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/user.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/user.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/user.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/CommonMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/CommonMiddleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/repositories/user.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/user.repository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/user.rotuter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user.rotuter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +136,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775547625710</updated>
       <workItem from="1775547626763" duration="1759000" />
-      <workItem from="1775549880760" duration="108548000" />
+      <workItem from="1775549880760" duration="110063000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
@@ -407,7 +386,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775972029344</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Lesson 12_04">
+      <option name="closed" value="true" />
+      <created>1776017083760</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1776017083760</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
