@@ -3,10 +3,12 @@ import { ApiError } from "./errors/api-error";
 import { userRouter } from "./routers/user.rotuter";
 import { configs } from "./config/configs";
 import * as mongoose from "mongoose";
+import { authRouter } from "./routers/auth.router";
 
 const app = express();
 app.use(express.json());
 
+app.use("/auth", authRouter);
 app.use("/users", userRouter);
 
 app.use((error: ApiError, req: Request, res: Response) => {

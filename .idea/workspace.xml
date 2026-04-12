@@ -4,15 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="11_04 lesson5">
-      <change afterPath="$PROJECT_DIR$/src/middleware/user.middleware.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/validators/user.validator.ts" afterDir="false" />
+    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="Lesson 12_04">
+      <change afterPath="$PROJECT_DIR$/src/controllers/auch.controler.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/enums/token-type.enum.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/interfaces/token.interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/middleware/auth.middleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/token.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/repositories/token.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routers/auth.router.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/password.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/token.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/configs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/configs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/user.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/user.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/user.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/CommonMiddleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/CommonMiddleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/repositories/user.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/repositories/user.repository.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routers/user.rotuter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user.rotuter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/fs.service.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +45,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hw/hw3" />
+        <entry key="$PROJECT_DIR$" value="hw/hw4" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -124,6 +138,7 @@
         <item itemvalue="npm.lint" />
         <item itemvalue="npm.start:dev" />
         <item itemvalue="npm.lint" />
+        <item itemvalue="npm.start:dev" />
       </list>
     </recent_temporary>
   </component>
@@ -142,7 +157,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775547625710</updated>
       <workItem from="1775547626763" duration="1759000" />
-      <workItem from="1775549880760" duration="90030000" />
+      <workItem from="1775549880760" duration="108548000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
@@ -352,7 +367,47 @@
       <option name="project" value="LOCAL" />
       <updated>1775920279612</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="11_04 lesson5">
+      <option name="closed" value="true" />
+      <created>1775922292164</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1775922292164</updated>
+    </task>
+    <task id="LOCAL-00028" summary="hw4">
+      <option name="closed" value="true" />
+      <created>1775922369255</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1775922369255</updated>
+    </task>
+    <task id="LOCAL-00029" summary="hw4">
+      <option name="closed" value="true" />
+      <created>1775922458644</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1775922458644</updated>
+    </task>
+    <task id="LOCAL-00030" summary="hw4">
+      <option name="closed" value="true" />
+      <created>1775971937112</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1775971937112</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Lesson 12_04">
+      <option name="closed" value="true" />
+      <created>1775972029344</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1775972029344</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,6 +430,8 @@
     <MESSAGE value="hw3" />
     <MESSAGE value="10_04 lesson5" />
     <MESSAGE value="11_04 lesson5" />
-    <option name="LAST_COMMIT_MESSAGE" value="11_04 lesson5" />
+    <MESSAGE value="hw4" />
+    <MESSAGE value="Lesson 12_04" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lesson 12_04" />
   </component>
 </project>
