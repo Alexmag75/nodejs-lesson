@@ -6,16 +6,24 @@ import { ApiError } from "../errors/api-error";
 
 class TokenService {
   public generateTokens(payload: ITokenPayload): ITokenPair {
-    const accessToken = jsonwebtoken.sign(payload, configs.JWT_ACCESS_SECRET!, {
+    const accessOptions: jsonwebtoken.SignOptions = {
       expiresIn: configs.JWT_ACCESS_EXPIRATION as any,
-    });
+    };
+
+    const refreshOptions: jsonwebtoken.SignOptions = {
+      expiresIn: configs.JWT_REFRESH_EXPIRATION as any,
+    };
+
+    const accessToken = jsonwebtoken.sign(
+      payload,
+      configs.JWT_ACCESS_SECRET,
+      accessOptions,
+    );
 
     const refreshToken = jsonwebtoken.sign(
       payload,
-      configs.JWT_REFRESH_SECRET!,
-      {
-        expiresIn: configs.JWT_REFRESH_EXPIRATION as any,
-      },
+      configs.JWT_REFRESH_SECRET,
+      refreshOptions,
     );
 
     return { accessToken, refreshToken };
@@ -28,7 +36,7 @@ class TokenService {
           ? configs.JWT_ACCESS_SECRET
           : configs.JWT_REFRESH_SECRET;
 
-      return jsonwebtoken.verify(token, secret!) as ITokenPayload;
+      return jsonwebtoken.verify(token, secret) as ITokenPayload;
     } catch {
       throw new ApiError("Invalid token", 401);
     }
