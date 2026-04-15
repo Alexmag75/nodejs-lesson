@@ -24,7 +24,16 @@ class AuthController {
     }
   }
 
-  // TODO add refresh token controller
+  public async refresh(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { jwtPayload, tokenPair } = res.locals; // Берем из middleware
+
+      const result = await authService.refresh(jwtPayload, tokenPair);
+      res.status(201).json(result);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const authController = new AuthController();

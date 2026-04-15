@@ -14,7 +14,7 @@ class AuthMiddleware {
     try {
       const header = req.headers.authorization;
       if (!header) {
-        throw new ApiError("Token is not provided", 401);
+        throw new ApiError("Token отсутствует", 401);
       }
       const accessToken = header.split("Bearer ")[1];
       const payload = tokenService.verifyToken(
@@ -24,9 +24,38 @@ class AuthMiddleware {
 
       const pair = await tokenRepository.findByParams({ accessToken });
       if (!pair) {
-        throw new ApiError("Token is not valid", 401);
+        throw new ApiError("Токен недействителен", 401);
       }
       res.locals.jwtPayload = payload;
+      next();
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async checkRefreshToken(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const refreshToken = req.body.refreshToken;
+
+      if (!refreshToken) {
+        throw new ApiError("Refresh token отсутствует", 401);
+      }
+
+      const payload = tokenService.verifyToken(
+        refreshToken,
+        TokenTypeEnum.REFRESH,
+      );
+
+      const pair = await tokenRepository.findByParams({ refreshToken });
+      if (!pair) {
+        throw new ApiError("Refresh токен недействителен или отозван", 401);
+      }
+      res.locals.jwtPayload = payload;
+      res.locals.tokenPair = pair;
+
       next();
     } catch (e) {
       next(e);
