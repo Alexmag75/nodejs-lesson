@@ -1,5 +1,5 @@
 import { ApiError } from "../errors/api-error";
-import { ITokenPair } from "../interfaces/token.interface";
+import { ITokenPair, ITokenPayload } from "../interfaces/token.interface";
 import { ISignIn, IUser } from "../interfaces/user.interface";
 import { tokenRepository } from "../repositories/token.repository";
 import { userRepository } from "../repositories/user.repository";
@@ -48,7 +48,7 @@ class AuthService {
     );
 
     if (!isPasswordCorrect) {
-      throw new ApiError("Invalid credentials", 401);
+      throw new ApiError("Неверные учетные данные", 401);
     }
 
     const tokens = tokenService.generateTokens({
@@ -63,10 +63,23 @@ class AuthService {
   private async isEmailExistOrThrow(email: string): Promise<void> {
     const user = await userRepository.getByEmail(email);
     if (user) {
-      throw new ApiError("Email already exists", 409);
+      throw new ApiError("Адрес электронной почты уже существует.", 409);
     }
+  }
+  public async refresh(
+    payload: ITokenPayload,
+    oldTokenPair: any,
+  ): Promise<ITokenPair> {
+    await tokenRepository.deleteById(oldTokenPair._id);
+
+    const newTokens = tokenService.generateTokens({
+      userId: payload.userId,
+      role: payload.role,
+    });
+
+    await tokenRepository.create({ ...newTokens, _userId: payload.userId });
+
+    return newTokens;
   }
 }
 export const authService = new AuthService();
-
-// TODO add refresh token service

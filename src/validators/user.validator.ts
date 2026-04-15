@@ -12,6 +12,10 @@ export const UserValidator = {
       .valid(...Object.values(RoleEnum))
       .optional(),
   }),
+  signIn: Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(), // При входе min(6) можно не ставить, просто required
+  }),
   update: Joi.object({
     name: Joi.string().min(3).max(30).optional(),
     email: Joi.string().email().optional(),

@@ -19,7 +19,7 @@ class UserService {
   public async getMe(jwtPayload: ITokenPayload): Promise<IUser> {
     const user = await userRepository.getById(jwtPayload.userId);
     if (!user) {
-      throw new ApiError("User not found", 404);
+      throw new ApiError("Пользователь не найден", 404);
     }
     return user;
   }
@@ -34,7 +34,7 @@ class UserService {
     );
 
     if (!updatedUser) {
-      throw new ApiError("User not found", 404);
+      throw new ApiError("Пользователь не найден", 404);
     }
 
     return updatedUser;
@@ -44,7 +44,7 @@ class UserService {
     const deletedUser = await userRepository.deleteById(jwtPayload.userId);
 
     if (!deletedUser) {
-      throw new ApiError("User not found", 404);
+      throw new ApiError("Пользователь не найден", 404);
     }
   }
 }
