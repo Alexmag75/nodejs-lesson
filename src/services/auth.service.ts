@@ -8,16 +8,12 @@ import { tokenService } from "./token.service";
 import { RoleEnum } from "../enums/role.enum";
 
 class AuthService {
-  public async signUp(
-    dto: Partial<IUser>,
-  ): Promise<{ user: IUser; tokens: ITokenPair }> {
-    if (!dto.email || !dto.password) {
-      throw new ApiError("Email and password are required", 400);
-    }
+  public async signUp(dto: Partial<IUser>): Promise<{ user: IUser }> {
+    await this.isEmailExistOrThrow(dto.email as string);
 
-    await this.isEmailExistOrThrow(dto.email);
-
-    const hashedPassword = await passwordService.hashPassword(dto.password);
+    const hashedPassword = await passwordService.hashPassword(
+      dto.password as string,
+    );
 
     const user = await userRepository.create({
       ...dto,
@@ -30,7 +26,7 @@ class AuthService {
     });
 
     await tokenRepository.create({ ...tokens, _userId: user._id! });
-    return { user, tokens };
+    return { user };
   }
 
   public async signIn(
