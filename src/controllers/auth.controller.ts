@@ -5,6 +5,7 @@ import { authService } from "../services/auth.service";
 
 class AuthController {
   public async signUp(req: Request, res: Response, next: NextFunction) {
+    console.log("!!! КОНТРОЛЛЕР ВЫЗВАН !!!");
     try {
       const dto = req.body as IUser;
       const result = await authService.signUp(dto);
@@ -26,7 +27,7 @@ class AuthController {
 
   public async refresh(req: Request, res: Response, next: NextFunction) {
     try {
-      const { jwtPayload, tokenPair } = res.locals; // Берем из middleware
+      const { jwtPayload, tokenPair } = res.locals;
 
       const result = await authService.refresh(jwtPayload, tokenPair);
       res.status(201).json(result);
