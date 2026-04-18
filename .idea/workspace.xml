@@ -5,27 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="lesson 6 16_04">
-      <change afterPath="$PROJECT_DIR$/src/constants/email.constants.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/enums/email-type.enum.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/email.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/layouts/main.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/partials/footer.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/partials/header.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/views/forgot-password.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/views/old-visit.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/views/welcome.hbs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/email-payload-combined.type.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/email-type-to-payload.type.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/pick-required.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/configs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/configs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/auth.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/fs.service.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,6 +162,7 @@
       <workItem from="1775549880760" duration="121886000" />
       <workItem from="1776181498448" duration="528000" />
       <workItem from="1776184253702" duration="2155000" />
+      <workItem from="1776527533546" duration="756000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
@@ -453,7 +436,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776340669184</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="lesson 6 16_04">
+      <option name="closed" value="true" />
+      <created>1776527746174</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1776527746174</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,10 +475,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/middleware/user.middleware.ts</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/repositories/token.repository.ts</url>
           <option name="timeStamp" value="2" />
