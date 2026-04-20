@@ -10,6 +10,21 @@ import { emailService } from "./email.service";
 import { EmailTypeEnum } from "../enums/email-type.enum";
 
 class AuthService {
+  public async logout(
+    userId: string,
+    tokenId: string,
+    userName: string,
+    email: string,
+  ): Promise<void> {
+    await tokenRepository.deleteTokenById(tokenId);
+
+    emailService.sendMail(EmailTypeEnum.LOGOUT, email, { name: userName });
+  }
+
+  public async logoutAll(userId: string): Promise<void> {
+    await tokenRepository.deleteByUserId(userId);
+  }
+
   public async signUp(dto: Partial<IUser>): Promise<{ user: IUser }> {
     await this.isEmailExistOrThrow(dto.email as string);
 

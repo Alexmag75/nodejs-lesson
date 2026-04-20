@@ -13,6 +13,14 @@ class TokenRepository {
   public async deleteById(tokenId: string): Promise<void> {
     await Token.findByIdAndDelete(tokenId);
   }
+
+  public async deleteTokenById(tokenId: string): Promise<void> {
+    await Token.findByIdAndDelete(tokenId);
+  }
+
+  public async deleteByUserId(userId: string): Promise<void> {
+    await Token.deleteMany({ _userId: userId });
+  }
 }
 
 export const tokenRepository = new TokenRepository();

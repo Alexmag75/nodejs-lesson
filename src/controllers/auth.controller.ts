@@ -34,6 +34,28 @@ class AuthController {
       next(e);
     }
   }
+
+  public async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { _id: tokenId, _userId: userId } = res.locals.tokenPair;
+      const { name, email } = res.locals.user;
+
+      await authService.logout(userId, tokenId, name, email);
+      res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async logoutAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { _userId: userId } = res.locals.tokenPair;
+      await authService.logoutAll(userId);
+      res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const authController = new AuthController();

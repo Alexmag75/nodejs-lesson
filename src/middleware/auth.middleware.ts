@@ -4,6 +4,7 @@ import { TokenTypeEnum } from "../enums/token-type.enum";
 import { ApiError } from "../errors/api-error";
 import { tokenRepository } from "../repositories/token.repository";
 import { tokenService } from "../services/token.service";
+import { userRepository } from "../repositories/user.repository";
 
 class AuthMiddleware {
   public async checkAccessToken(
@@ -26,6 +27,10 @@ class AuthMiddleware {
       if (!pair) {
         throw new ApiError("Токен недействителен", 401);
       }
+      const user = await userRepository.getById(payload.userId);
+      if (!user) throw new ApiError("User not found", 404);
+
+      res.locals.tokenPair = pair;
       res.locals.jwtPayload = payload;
       next();
     } catch (e) {
@@ -53,6 +58,11 @@ class AuthMiddleware {
       if (!pair) {
         throw new ApiError("Refresh токен недействителен или отозван", 401);
       }
+      const user = await userRepository.getById(payload.userId);
+      if (!user) {
+        throw new ApiError("Пользователь не найден", 404);
+      }
+      res.locals.user = user;
       res.locals.jwtPayload = payload;
       res.locals.tokenPair = pair;
 
