@@ -6,6 +6,8 @@ import { userRepository } from "../repositories/user.repository";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
 import { RoleEnum } from "../enums/role.enum";
+import { emailService } from "./email.service";
+import { EmailTypeEnum } from "../enums/email-type.enum";
 
 class AuthService {
   public async signUp(dto: Partial<IUser>): Promise<{ user: IUser }> {
@@ -26,6 +28,12 @@ class AuthService {
     });
 
     await tokenRepository.create({ ...tokens, _userId: user._id! });
+    await emailService.sendMail(
+      EmailTypeEnum.WELCOME,
+      "aleksandrmargrarit@gmail.com",
+      { name: user.name },
+    );
+
     return { user };
   }
 
