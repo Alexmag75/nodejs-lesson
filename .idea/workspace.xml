@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="lesson 6 21_04" />
+    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="dz 6">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hw/hw4" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,7 +64,7 @@
     "Notification.DoNotAsk-vcs.commit.failed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "hw/hw6",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Front-end/Записи/уроки/Node_JS/nodeJs-lesson",
     "node.js.detected.package.eslint": "true",
@@ -160,7 +163,7 @@
       <workItem from="1775549880760" duration="121886000" />
       <workItem from="1776181498448" duration="528000" />
       <workItem from="1776184253702" duration="2155000" />
-      <workItem from="1776527533546" duration="27188000" />
+      <workItem from="1776527533546" duration="27853000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
@@ -506,6 +509,7 @@
     <MESSAGE value="lesson 6 18_04" />
     <MESSAGE value="lesson 6 20_04" />
     <MESSAGE value="lesson 6 21_04" />
-    <option name="LAST_COMMIT_MESSAGE" value="lesson 6 21_04" />
+    <MESSAGE value="dz 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="dz 6" />
   </component>
 </project>

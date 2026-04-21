@@ -29,7 +29,7 @@ app.listen(configs.APP_PORT, async () => {
       `Сервер работает на http://${configs.APP_HOST}:${configs.APP_PORT}`,
     );
   } catch (error) {
-    console.error("Не удалось установить соединение с базой данных.", error);
+    console.error("Не удалось установить соединение с базой данных...", error);
     process.exit(1);
   }
 });
