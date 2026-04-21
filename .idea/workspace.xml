@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="lesson 6 21_04">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/auth.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/auth.middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth.service.ts" afterDir="false" />
-    </list>
+    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="lesson 6 21_04" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,7 +160,7 @@
       <workItem from="1775549880760" duration="121886000" />
       <workItem from="1776181498448" duration="528000" />
       <workItem from="1776184253702" duration="2155000" />
-      <workItem from="1776527533546" duration="26787000" />
+      <workItem from="1776527533546" duration="27188000" />
     </task>
     <task id="LOCAL-00001" summary="07_04">
       <option name="closed" value="true" />
