@@ -18,13 +18,9 @@ class AuthService {
   ): Promise<void> {
     await tokenRepository.deleteTokenById(tokenId);
 
-    await emailService.sendMail(
-      EmailTypeEnum.LOGOUT,
-      "aleksandrmargrarit@gmail.com",
-      {
-        name: userName,
-      },
-    );
+    await emailService.sendMail(EmailTypeEnum.LOGOUT, email, {
+      name: userName,
+    });
   }
 
   public async logoutAll(userId: string): Promise<void> {
