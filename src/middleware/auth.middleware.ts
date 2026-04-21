@@ -5,6 +5,8 @@ import { ApiError } from "../errors/api-error";
 import { tokenRepository } from "../repositories/token.repository";
 import { tokenService } from "../services/token.service";
 import { userRepository } from "../repositories/user.repository";
+import { IResetPasswordSet } from "../interfaces/user.interface";
+import { actionTokenRepository } from "../repositories/action-token.repository";
 
 class AuthMiddleware {
   public async checkAccessToken(
@@ -67,6 +69,26 @@ class AuthMiddleware {
       res.locals.jwtPayload = payload;
       res.locals.tokenPair = pair;
 
+      next();
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async checkActionToken(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { token } = req.body as IResetPasswordSet;
+      const payload = tokenService.verifyToken(token, TokenTypeEnum.ACCESS);
+
+      const tokenEntity = await actionTokenRepository.getByToken(token);
+      if (!tokenEntity) {
+        throw new ApiError("Token is not valid", 401);
+      }
+      res.locals.jwtPayload = payload;
       next();
     } catch (e) {
       next(e);
