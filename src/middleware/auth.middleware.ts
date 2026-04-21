@@ -30,6 +30,7 @@ class AuthMiddleware {
       const user = await userRepository.getById(payload.userId);
       if (!user) throw new ApiError("User not found", 404);
 
+      res.locals.user = user;
       res.locals.tokenPair = pair;
       res.locals.jwtPayload = payload;
       next();
