@@ -30,7 +30,7 @@ class AuthController {
     }
   }
 
-  public async refresh(req: Request, res: Response, next: NextFunction) {
+  public async refresh(_req: Request, res: Response, next: NextFunction) {
     try {
       const { jwtPayload, tokenPair } = res.locals; // Берем из middleware
 
@@ -41,7 +41,7 @@ class AuthController {
     }
   }
 
-  public async logout(req: Request, res: Response, next: NextFunction) {
+  public async logout(_req: Request, res: Response, next: NextFunction) {
     try {
       const { _id: tokenId, _userId: userId } = res.locals.tokenPair;
       const { name, email } = res.locals.user;
@@ -53,7 +53,7 @@ class AuthController {
     }
   }
 
-  public async logoutAll(req: Request, res: Response, next: NextFunction) {
+  public async logoutAll(_req: Request, res: Response, next: NextFunction) {
     try {
       const { _userId: userId } = res.locals.tokenPair;
       await authService.logoutAll(userId);

@@ -30,12 +30,25 @@ class TokenService {
     return { accessToken, refreshToken };
   }
 
-  public verifyToken(token: string, type: TokenTypeEnum): ITokenPayload {
+  public verifyToken(
+    token: string,
+    type: TokenTypeEnum | ActionTokenTypeEnum, // Расширяем принимаемые типы
+  ): ITokenPayload {
     try {
-      const secret =
-        type === TokenTypeEnum.ACCESS
-          ? configs.JWT_ACCESS_SECRET
-          : configs.JWT_REFRESH_SECRET;
+      let secret: string;
+      switch (type) {
+        case TokenTypeEnum.ACCESS:
+          secret = configs.JWT_ACCESS_SECRET;
+          break;
+        case TokenTypeEnum.REFRESH:
+          secret = configs.JWT_REFRESH_SECRET;
+          break;
+        case ActionTokenTypeEnum.FORGOT_PASSWORD:
+          secret = configs.ACTION_FORGOT_PASSWORD_SECRET!;
+          break;
+        default:
+          throw new ApiError("Unsupported token type", 400);
+      }
 
       return jsonwebtoken.verify(token, secret) as ITokenPayload;
     } catch {

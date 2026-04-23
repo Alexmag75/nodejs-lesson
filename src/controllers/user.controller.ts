@@ -4,7 +4,7 @@ import { userService } from "../services/user.service";
 import { ITokenPayload } from "../interfaces/token.interface";
 
 class UserController {
-  public async getList(req: Request, res: Response, next: NextFunction) {
+  public async getList(_req: Request, res: Response, next: NextFunction) {
     try {
       const result = await userService.getList();
       res.json(result);
@@ -22,7 +22,7 @@ class UserController {
       next(e);
     }
   }
-  public async getMe(req: Request, res: Response, next: NextFunction) {
+  public async getMe(_req: Request, res: Response, next: NextFunction) {
     try {
       const jwtPayload = res.locals.jwtPayload as ITokenPayload;
 
@@ -45,7 +45,7 @@ class UserController {
     }
   }
 
-  public async deleteMe(req: Request, res: Response, next: NextFunction) {
+  public async deleteMe(_req: Request, res: Response, next: NextFunction) {
     try {
       const jwtPayload = res.locals.jwtPayload as ITokenPayload;
       await userService.deleteMe(jwtPayload);

@@ -6,20 +6,20 @@ import { ApiError } from "../errors/api-error";
 
 class CommonMiddleware {
   public isIdValid(key: string) {
-    return (req: Request, res: Response, next: NextFunction) => {
-      try {
-        if (!isObjectIdOrHexString(req.params[key])) {
-          throw new ApiError("Invalid ID", 400);
-        }
-        next();
-      } catch (e) {
-        next(e);
+    return (req: Request, _res: Response, next: NextFunction): void => {
+      if (!isObjectIdOrHexString(req.params[key])) {
+        return next(new ApiError("Invalid ID", 400));
       }
+      next();
     };
   }
 
   public isBodyValid(validator: ObjectSchema) {
-    return async (req: Request, res: Response, next: NextFunction) => {
+    return async (
+      req: Request,
+      _res: Response,
+      next: NextFunction,
+    ): Promise<void> => {
       try {
         req.body = await validator.validateAsync(req.body);
         next();

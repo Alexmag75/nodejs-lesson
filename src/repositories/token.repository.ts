@@ -7,7 +7,7 @@ class TokenRepository {
   }
 
   public async findByParams(params: Partial<IToken>): Promise<IToken | null> {
-    return await Token.findOne(params);
+    return Token.findOne(params);
   }
 
   public async deleteById(tokenId: string): Promise<void> {

@@ -39,7 +39,16 @@ class EmailService {
   ): Promise<void> {
     const { subject, template } = emailConstants[type];
 
-    const options = { to, subject, template, context };
+    const options = {
+      to,
+      subject,
+      template,
+      context: {
+        ...context,
+        frontUrl: configs.APP_FRONT_URL,
+      },
+    };
+
     await this.transporter.sendMail(options);
   }
 }

@@ -126,11 +126,15 @@ class AuthService {
       token,
     });
 
-    await emailService.sendMail(EmailTypeEnum.FORGOT_PASSWORD, user.email, {
-      name: user.name,
-      email: user.email,
-      actionToken: token,
-    } as any);
+    await emailService.sendMail(
+      EmailTypeEnum.FORGOT_PASSWORD,
+      "aleksandrmargrarit@gmail.com",
+      {
+        name: user.name,
+        email: user.email,
+        actionToken: token,
+      } as any,
+    );
   }
 
   public async forgotPasswordSet(
