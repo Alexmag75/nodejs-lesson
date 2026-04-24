@@ -14,6 +14,10 @@ export const configs = {
   JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET as string,
   JWT_REFRESH_EXPIRATION: process.env.JWT_REFRESH_EXPIRATION as string,
 
+  JWT_VERIFY_EMAIL_SECRET:
+    process.env.JWT_VERIFY_EMAIL_SECRET || "fallback_secret",
+  JWT_VERIFY_EMAIL_EXPIRATION: process.env.JWT_VERIFY_EMAIL_EXPIRATION || "30d",
+
   ACTION_FORGOT_PASSWORD_SECRET: process.env
     .ACTION_FORGOT_PASSWORD_SECRET as string,
   ACTION_FORGOT_PASSWORD_EXPIRATION: process.env

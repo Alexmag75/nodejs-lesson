@@ -38,4 +38,10 @@ router.put(
   authMiddleware.checkActionToken,
   authController.forgotPasswordSet,
 );
+
+router.patch(
+  "/verify",
+  authMiddleware.checkVerifyEmailToken,
+  authController.verifyEmail,
+);
 export const authRouter = router;

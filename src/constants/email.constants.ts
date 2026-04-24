@@ -17,4 +17,8 @@ export const emailConstants = {
     subject: "Security notification: Logout performed",
     template: "logout",
   },
+  [EmailTypeEnum.VERIFY_EMAIL]: {
+    subject: "Confirm your registration",
+    template: "verify-email",
+  },
 };

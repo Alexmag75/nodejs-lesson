@@ -36,29 +36,46 @@ class AuthService {
 
   public async signUp(dto: Partial<IUser>): Promise<{ user: IUser }> {
     await this.isEmailExistOrThrow(dto.email as string);
-
     const hashedPassword = await passwordService.hashPassword(
       dto.password as string,
     );
-
     const user = await userRepository.create({
       ...dto,
       password: hashedPassword,
     } as IUser);
-
-    const tokens = tokenService.generateTokens({
-      userId: user._id!.toString(),
-      role: user.role || RoleEnum.USER,
-    });
-
-    await tokenRepository.create({ ...tokens, _userId: user._id! });
-    await emailService.sendMail(
-      EmailTypeEnum.WELCOME,
-      "aleksandrmargrarit@gmail.com",
-      { name: user.name },
+    const verifyToken = tokenService.generateActionTokens(
+      { userId: user._id!.toString(), role: user.role || RoleEnum.USER },
+      ActionTokenTypeEnum.VERIFY_EMAIL,
     );
 
+    await actionTokenRepository.create({
+      type: ActionTokenTypeEnum.VERIFY_EMAIL,
+      _userId: user._id!,
+      token: verifyToken,
+    });
+
+    await emailService.sendMail(
+      EmailTypeEnum.VERIFY_EMAIL,
+      "aleksandrmargrarit@gmail.com",
+      {
+        name: user.name,
+        actionToken: verifyToken,
+      } as any,
+    );
     return { user };
+  }
+
+  public async verifyEmail(userId: string, tokenId: string): Promise<void> {
+    const user = await userRepository.getById(userId);
+    if (!user) throw new ApiError("User not found", 404);
+
+    await userRepository.updateById(userId, { isVerified: true });
+
+    await actionTokenRepository.deleteManyByParams({ _id: tokenId });
+
+    await emailService.sendMail(EmailTypeEnum.WELCOME, user.email, {
+      name: user.name,
+    });
   }
 
   public async signIn(

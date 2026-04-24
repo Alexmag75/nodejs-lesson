@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express, { Request, Response } from "express";
 import { ApiError } from "./errors/api-error";
 import { userRouter } from "./routers/user.router";

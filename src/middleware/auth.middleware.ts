@@ -111,5 +111,38 @@ class AuthMiddleware {
       next(e);
     }
   }
+
+  public async checkVerifyEmailToken(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { token } = req.body;
+      if (!token) {
+        return next(new ApiError("Token is required", 400));
+      }
+
+      const payload = tokenService.verifyToken(
+        token,
+        ActionTokenTypeEnum.VERIFY_EMAIL,
+      );
+
+      const tokenEntity = await actionTokenRepository.getByToken(token);
+      if (
+        !tokenEntity ||
+        tokenEntity.type !== ActionTokenTypeEnum.VERIFY_EMAIL
+      ) {
+        return next(new ApiError("Token is not valid or expired", 401));
+      }
+
+      res.locals.jwtPayload = payload;
+      res.locals.tokenEntity = tokenEntity;
+
+      next();
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 export const authMiddleware = new AuthMiddleware();

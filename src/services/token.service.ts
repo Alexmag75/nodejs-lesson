@@ -46,6 +46,9 @@ class TokenService {
         case ActionTokenTypeEnum.FORGOT_PASSWORD:
           secret = configs.ACTION_FORGOT_PASSWORD_SECRET!;
           break;
+        case ActionTokenTypeEnum.VERIFY_EMAIL:
+          secret = configs.JWT_VERIFY_EMAIL_SECRET;
+          break;
         default:
           throw new ApiError("Unsupported token type", 400);
       }
@@ -67,10 +70,15 @@ class TokenService {
         secret = configs.ACTION_FORGOT_PASSWORD_SECRET!;
         expiresIn = configs.ACTION_FORGOT_PASSWORD_EXPIRATION!;
         break;
+      case ActionTokenTypeEnum.VERIFY_EMAIL:
+        secret = configs.JWT_VERIFY_EMAIL_SECRET;
+        expiresIn = configs.JWT_VERIFY_EMAIL_EXPIRATION;
+        break;
       default:
         throw new ApiError("Invalid token type", 400);
     }
-
+    console.log("Token Type:", tokenType);
+    console.log("Expires In:", expiresIn);
     return jsonwebtoken.sign(payload, secret, {
       expiresIn: expiresIn as jsonwebtoken.SignOptions["expiresIn"],
     });

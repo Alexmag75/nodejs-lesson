@@ -1,0 +1,26 @@
+<table style="width: 100%; padding: 45px 35px; box-sizing: border-box; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+    <tr>
+        <td style="font-size: 18px; text-align: center; color: #333;">
+            <b>{{name}}</b>, Welcome to our platform!
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: center;">
+            <p style="margin: 17px 0; color: #555;">
+                You need to confirm your email to activate your account. Please click the button below:
+            </p>
+            <a href="{{frontUrl}}/activate?token={{actionToken}}"
+            style="display: inline-block; padding: 12px 24px; color: #ffffff; background-color: #007bff; text-decoration: none; border-radius: 5px; font-weight: bold;">
+            VERIFY EMAIL
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: center; padding-top: 20px;">
+            <p style="font-size: 12px; color: #999;">
+                If the button doesn't work, copy and paste this link into your browser:<br>
+                {{frontUrl}}/activate?token={{actionToken}}
+            </p>
+        </td>
+    </tr>
+</table>

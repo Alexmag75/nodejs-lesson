@@ -91,6 +91,22 @@ class AuthController {
       next(e);
     }
   }
+  public async verifyEmail(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
+    try {
+      const { userId } = res.locals.jwtPayload;
+      const { _id: tokenId } = res.locals.tokenEntity;
+
+      await authService.verifyEmail(userId, tokenId);
+
+      res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const authController = new AuthController();
