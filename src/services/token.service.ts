@@ -77,8 +77,6 @@ class TokenService {
       default:
         throw new ApiError("Invalid token type", 400);
     }
-    console.log("Token Type:", tokenType);
-    console.log("Expires In:", expiresIn);
     return jsonwebtoken.sign(payload, secret, {
       expiresIn: expiresIn as jsonwebtoken.SignOptions["expiresIn"],
     });
