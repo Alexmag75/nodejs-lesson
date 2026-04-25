@@ -9,8 +9,11 @@ class TimeHelper {
     value: number;
     unit: ManipulateType;
   } {
-    const [value, unit] = string.split(" ");
-    return { value: parseInt(value), unit: unit as ManipulateType };
+    const parts = string.trim().split(" ");
+    if (parts.length !== 2) {
+      return { value: 30, unit: "days" as ManipulateType };
+    }
+    return { value: parseInt(parts[0]), unit: parts[1] as ManipulateType };
   }
 }
 
