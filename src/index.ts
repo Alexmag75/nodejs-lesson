@@ -6,6 +6,7 @@ import { userRouter } from "./routers/user.router";
 import { configs } from "./config/configs";
 import * as mongoose from "mongoose";
 import { authRouter } from "./routers/auth.router";
+import { cronRunner } from "./crons";
 
 const app = express();
 app.use(express.json());
@@ -30,6 +31,7 @@ app.listen(configs.APP_PORT, async () => {
     console.log(
       `Сервер работает на http://${configs.APP_HOST}:${configs.APP_PORT}`,
     );
+    cronRunner();
   } catch (error) {
     console.error("Не удалось установить соединение с базой данных.:", error);
     process.exit(1);
