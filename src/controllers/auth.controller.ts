@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import {
+  IChangePassword,
   IResetPasswordSend,
   IResetPasswordSet,
   ISignIn,
@@ -32,7 +33,7 @@ class AuthController {
 
   public async refresh(_req: Request, res: Response, next: NextFunction) {
     try {
-      const { jwtPayload, tokenPair } = res.locals; // Берем из middleware
+      const { jwtPayload, tokenPair } = res.locals;
 
       const result = await authService.refresh(jwtPayload, tokenPair);
       res.status(201).json(result);
@@ -102,6 +103,17 @@ class AuthController {
 
       await authService.verifyEmail(userId, tokenId);
 
+      res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async changePassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const jwtPayload = res.locals.jwtPayload as ITokenPayload;
+      const dto = req.body as IChangePassword;
+
+      await authService.changePassword(jwtPayload, dto);
       res.sendStatus(204);
     } catch (e) {
       next(e);

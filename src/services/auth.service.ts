@@ -1,6 +1,7 @@
 import { ApiError } from "../errors/api-error";
 import { ITokenPair, ITokenPayload } from "../interfaces/token.interface";
 import {
+  IChangePassword,
   IResetPasswordSend,
   IResetPasswordSet,
   ISignIn,
@@ -165,6 +166,33 @@ class AuthService {
       _userId: jwtPayload.userId,
       type: ActionTokenTypeEnum.FORGOT_PASSWORD,
     });
+    await tokenRepository.deleteManyByParams({ _userId: jwtPayload.userId });
+  }
+
+  public async changePassword(
+    jwtPayload: ITokenPayload,
+    dto: IChangePassword,
+  ): Promise<void> {
+    const user = await userRepository.getById(jwtPayload.userId);
+    if (!user) {
+      throw new ApiError("User not found", 404);
+    }
+
+    const isPasswordCorrect = await passwordService.comparePassword(
+      dto.oldPassword,
+      user.password,
+    );
+
+    if (!isPasswordCorrect) {
+      throw new ApiError("Old password is wrong", 401);
+    }
+
+    const hashedPassword = await passwordService.hashPassword(dto.password);
+
+    await userRepository.updateById(jwtPayload.userId, {
+      password: hashedPassword,
+    });
+
     await tokenRepository.deleteManyByParams({ _userId: jwtPayload.userId });
   }
 }

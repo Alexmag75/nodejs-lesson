@@ -11,7 +11,7 @@ class UserRepository {
   }
 
   public async getById(userId: string): Promise<IUser | null> {
-    return User.findById(userId);
+    return User.findById(userId).select("+password");
   }
   public async getByEmail(email: string): Promise<IUser | null> {
     return User.findOne({ email }).select("+password");
