@@ -36,7 +36,7 @@ export const UserValidator = {
     }),
     password: Joi.string().min(8).max(30).required().messages({
       "string.min": "New password must be at least 8 characters long",
-      "any.required": "New password is required",
+      "any.required": "New password is required.",
     }),
   }),
 };
