@@ -16,6 +16,7 @@ import { emailService } from "./email.service";
 import { EmailTypeEnum } from "../enums/email-type.enum";
 import { ActionTokenTypeEnum } from "../enums/action-token-type.enum";
 import { actionTokenRepository } from "../repositories/action-token.repository";
+import { oldPasswordRepository } from "../repositories/old-password.repository";
 
 class AuthService {
   public async logout(
@@ -103,6 +104,9 @@ class AuthService {
     });
 
     await tokenRepository.create({ ...tokens, _userId: user._id });
+    await userRepository.updateById(user._id!.toString(), {
+      lastVisit: new Date(),
+    });
     return { user, tokens };
   }
 
@@ -124,12 +128,11 @@ class AuthService {
     });
 
     await tokenRepository.create({ ...newTokens, _userId: payload.userId });
-
     return newTokens;
   }
 
   public async forgotPasswordSendEmail(dto: IResetPasswordSend): Promise<void> {
-    const user = await userRepository.getByEmail(dto.email);
+    const user = await userRepository.getByEmail(dto.email as string);
     if (!user) {
       throw new ApiError("User not found", 404);
     }
@@ -174,20 +177,38 @@ class AuthService {
     dto: IChangePassword,
   ): Promise<void> {
     const user = await userRepository.getById(jwtPayload.userId);
-    if (!user) {
-      throw new ApiError("User not found", 404);
-    }
+    if (!user) throw new ApiError("User not found", 404);
 
     const isPasswordCorrect = await passwordService.comparePassword(
       dto.oldPassword,
       user.password,
     );
+    if (!isPasswordCorrect) throw new ApiError("Old password is wrong", 401);
 
-    if (!isPasswordCorrect) {
-      throw new ApiError("Old password is wrong", 401);
+    const oldPasswords = await oldPasswordRepository.findByUserId(
+      jwtPayload.userId,
+    );
+    const forbiddenPasswords = [...oldPasswords, { password: user.password }];
+
+    for (const entry of forbiddenPasswords) {
+      const isMatched = await passwordService.comparePassword(
+        dto.password,
+        entry.password,
+      );
+      if (isMatched) {
+        throw new ApiError(
+          "You cannot use a password that has been used in the last 180 days",
+          400,
+        );
+      }
     }
 
     const hashedPassword = await passwordService.hashPassword(dto.password);
+
+    await oldPasswordRepository.create({
+      _userId: user._id,
+      password: user.password,
+    });
 
     await userRepository.updateById(jwtPayload.userId, {
       password: hashedPassword,

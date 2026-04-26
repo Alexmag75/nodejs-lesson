@@ -10,7 +10,10 @@ export type EmailTypeToPayload = {
     "name" | "email"
   >;
 
-  [EmailTypeEnum.OLD_VISIT]: PickRequired<EmailPayloadCombined, "email">;
+  [EmailTypeEnum.OLD_VISIT]: {
+    name: string;
+    frontUrl: string;
+  };
   [EmailTypeEnum.LOGOUT]: PickRequired<EmailPayloadCombined, "name">;
 
   [EmailTypeEnum.VERIFY_EMAIL]: {

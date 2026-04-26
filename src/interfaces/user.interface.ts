@@ -12,6 +12,7 @@ export interface IUser {
   phone?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  lastVisit?: Date;
 }
 
 export type ISignIn = Pick<IUser, "email" | "password">;

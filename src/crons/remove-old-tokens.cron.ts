@@ -1,5 +1,4 @@
 import { CronJob } from "cron";
-
 import { configs } from "../config/configs";
 import { timeHelper } from "../helpers/time.helper";
 import { tokenRepository } from "../repositories/token.repository";
@@ -11,11 +10,15 @@ const handler = async () => {
     );
 
     const date = timeHelper.subtractByParams(value, unit);
+
     const deletedCount = await tokenRepository.deleteBeforeDate(date);
-    console.log(`Deleted ${deletedCount} old tokens`);
+
+    if (deletedCount > 0) {
+      console.log(`[Cron-Tokens] Удалено истекших токенов: ${deletedCount}`);
+    }
   } catch (error) {
-    console.error(error);
+    console.error("[Cron-Tokens Error]:", error);
   }
 };
 
-export const removeOldTokensCronJob = new CronJob("0 * * * *", handler);
+export const removeOldTokensCronJob = new CronJob("0 1 * * *", handler);

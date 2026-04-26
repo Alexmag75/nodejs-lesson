@@ -13,6 +13,7 @@ const userSchema = new Schema(
     role: { type: String, enum: RoleEnum, default: RoleEnum.USER },
     isVerified: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
+    lastVisit: { type: Date, default: Date.now },
   },
   {
     timestamps: true,
