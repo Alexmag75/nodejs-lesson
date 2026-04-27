@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import fileUpload from "express-fileupload";
 dotenv.config();
 import express, { Request, Response } from "express";
 import { ApiError } from "./errors/api-error";
@@ -10,6 +11,7 @@ import { cronRunner } from "./crons";
 
 const app = express();
 app.use(express.json());
+app.use(fileUpload());
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);

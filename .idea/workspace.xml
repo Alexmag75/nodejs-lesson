@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="hw8">
+    <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="lesson 10">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/validators/user.validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/validators/user.validator.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="hw/hw8" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,7 +68,7 @@
     "Notification.DoNotAsk-vcs.commit.failed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "hw/hw8",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Front-end/Записи/уроки/Node_JS/nodeJs-lesson",
     "node.js.detected.package.eslint": "true",
@@ -136,8 +141,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start:dev" />
         <item itemvalue="npm.watch:server" />
+        <item itemvalue="npm.start:dev" />
         <item itemvalue="npm.start" />
         <item itemvalue="npm.lint" />
         <item itemvalue="npm.start:dev" />
@@ -163,14 +168,6 @@
       <workItem from="1776181498448" duration="528000" />
       <workItem from="1776184253702" duration="2155000" />
       <workItem from="1776527533546" duration="26787000" />
-    </task>
-    <task id="LOCAL-00001" summary="07_04">
-      <option name="closed" value="true" />
-      <created>1775554065992</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1775554065992</updated>
     </task>
     <task id="LOCAL-00002" summary="07_04">
       <option name="closed" value="true" />
@@ -556,7 +553,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777189112444</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="lesson 10">
+      <option name="closed" value="true" />
+      <created>1777314580725</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1777314580725</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,6 +609,7 @@
     <MESSAGE value="lesson 9 25_04" />
     <MESSAGE value="lesson 9 26_04" />
     <MESSAGE value="hw8" />
-    <option name="LAST_COMMIT_MESSAGE" value="hw8" />
+    <MESSAGE value="lesson 10" />
+    <option name="LAST_COMMIT_MESSAGE" value="lesson 10" />
   </component>
 </project>
