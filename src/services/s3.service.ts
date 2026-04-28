@@ -50,7 +50,7 @@ class S3Service {
     itemId: string,
     fileName: string,
   ): string {
-    return `${itemType}/${itemId}/${randomUUID()}${path.extname(fileName)}`; // use only  template string
+    return `${itemType}/${itemId}/${randomUUID()}${path.extname(fileName)}`;
   }
   public async deleteFile(filePath: string): Promise<void> {
     try {
