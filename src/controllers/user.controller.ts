@@ -28,7 +28,8 @@ class UserController {
     try {
       const jwtPayload = res.locals.jwtPayload as ITokenPayload;
 
-      const result = await userService.getMe(jwtPayload);
+      const user = await userService.getMe(jwtPayload);
+      const result = userPresenter.toPublicResDto(user);
       res.json(result);
     } catch (e) {
       next(e);
