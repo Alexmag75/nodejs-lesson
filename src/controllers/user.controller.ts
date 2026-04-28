@@ -8,7 +8,8 @@ import { userPresenter } from "../presenters/user.presenter";
 class UserController {
   public async getList(_req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await userService.getList();
+      const users = await userService.getList();
+      const result = users.map((user) => userPresenter.toPublicResDto(user));
       res.json(result);
     } catch (e) {
       next(e);
@@ -18,7 +19,8 @@ class UserController {
   public async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.params.userId as string;
-      const result = await userService.getById(userId);
+      const user = await userService.getById(userId);
+      const result = userPresenter.toPublicResDto(user);
       res.json(result);
     } catch (e) {
       next(e);
@@ -70,6 +72,18 @@ class UserController {
 
       const result = userPresenter.toPublicResDto(user);
       res.status(201).json(result);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async deleteAvatar(req: Request, res: Response, next: NextFunction) {
+    try {
+      const jwtPayload = res.locals.jwtPayload as ITokenPayload;
+
+      const user = await userService.deleteAvatar(jwtPayload);
+      const result = userPresenter.toPublicResDto(user);
+
+      res.status(200).json(result);
     } catch (e) {
       next(e);
     }

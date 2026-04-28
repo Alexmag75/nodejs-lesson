@@ -7,6 +7,9 @@
     <list default="true" id="5f83030f-fc25-4327-b66f-12a89579b5a6" name="Changes" comment="lesson 10 28_04">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/user.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/file.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/file.middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/user.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user.router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="hw/hw8" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,7 +67,7 @@
     "Notification.DoNotAsk-vcs.commit.failed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "hw/hw9",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Front-end/Записи/уроки/Node_JS/nodeJs-lesson",
     "node.js.detected.package.eslint": "true",
@@ -164,14 +167,6 @@
       <workItem from="1776181498448" duration="528000" />
       <workItem from="1776184253702" duration="2155000" />
       <workItem from="1776527533546" duration="26787000" />
-    </task>
-    <task id="LOCAL-00005" summary="hw1">
-      <option name="closed" value="true" />
-      <created>1775579792579</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1775579792579</updated>
     </task>
     <task id="LOCAL-00006" summary="08-04">
       <option name="closed" value="true" />
@@ -557,7 +552,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777375838705</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="lesson 10 28_04">
+      <option name="closed" value="true" />
+      <created>1777394058537</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1777394058537</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

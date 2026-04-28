@@ -82,6 +82,30 @@ class UserService {
 
     return updatedUser;
   }
+
+  public async deleteAvatar(jwtPayload: ITokenPayload): Promise<IUser> {
+    const user = await userRepository.getById(jwtPayload.userId);
+
+    if (!user || !user._id) {
+      throw new ApiError("Пользователь не найден", 404);
+    }
+
+    if (!user.avatar) {
+      throw new ApiError("У пользователя нет аватара", 400);
+    }
+
+    await s3Service.deleteFile(user.avatar);
+
+    const updatedUser = await userRepository.updateById(user._id.toString(), {
+      avatar: undefined,
+    });
+
+    if (!updatedUser) {
+      throw new ApiError("Ошибка при обновлении пользователя", 500);
+    }
+
+    return updatedUser;
+  }
 }
 
 export const userService = new UserService();

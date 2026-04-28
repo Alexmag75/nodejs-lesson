@@ -25,6 +25,11 @@ router.post(
   fileMiddleware.isFileValid(),
   userController.uploadAvatar,
 );
+router.delete(
+  "/me/avatar",
+  authMiddleware.checkAccessToken,
+  userController.deleteAvatar,
+);
 router.get(
   "/:userId",
   commonMiddleware.isIdValid("userId"),

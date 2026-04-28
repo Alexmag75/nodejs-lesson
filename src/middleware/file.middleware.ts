@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../errors/api-error";
-import { UploadedFile } from "express-fileupload";
+import path from "path";
 
 class FileMiddleware {
   public isFileValid() {
@@ -10,15 +10,28 @@ class FileMiddleware {
           return next(new ApiError("Файл аватара не найден", 400));
         }
 
-        const file = req.files.avatar as UploadedFile;
+        const file = req.files.avatar;
 
-        if (!file.mimetype.startsWith("image/")) {
-          return next(new ApiError("Разрешены только изображения", 400));
+        const avatarFile = Array.isArray(file) ? file[0] : file;
+
+        const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+        if (!allowedMimeTypes.includes(avatarFile.mimetype)) {
+          return next(
+            new ApiError("Допустимы только форматы: jpeg, png, webp", 400),
+          );
         }
 
-        if (file.size > 2 * 1024 * 1024) {
-          return next(new ApiError("Файл слишком большой", 400));
+        const fileExtension = path.extname(avatarFile.name).toLowerCase();
+        const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp"];
+        if (!allowedExtensions.includes(fileExtension)) {
+          return next(new ApiError("Неверное расширение файла", 400));
         }
+
+        if (avatarFile.size > 2 * 1024 * 1024) {
+          return next(new ApiError("Файл слишком большой (макс. 2МБ)", 400));
+        }
+
+        req.files.avatar = avatarFile;
 
         next();
       } catch (e) {
