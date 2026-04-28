@@ -12,15 +12,14 @@ import { cronRunner } from "./crons";
 const app = express();
 app.use(express.json());
 app.use(fileUpload());
-
-app.use("/auth", authRouter);
-app.use("/users", userRouter);
-
-app.use((error: ApiError, req: Request, res: Response) => {
-  res.status(error.status || 500).json({
-    message: error.message || "Unknown error",
+app.use((err: ApiError, _req: Request, res: Response) => {
+  const status = err.status || 500;
+  res.status(status).json({
+    message: err.message || "Internal Server Error",
   });
 });
+app.use("/auth", authRouter);
+app.use("/users", userRouter);
 
 process.on("uncaughtException", (error: Error) => {
   console.error("uncaughtException", error.message, error.stack);
