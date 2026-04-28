@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { IUser } from "../interfaces/user.interface";
 import { userService } from "../services/user.service";
 import { ITokenPayload } from "../interfaces/token.interface";
+import { UploadedFile } from "express-fileupload";
+import { userPresenter } from "../presenters/user.presenter";
 
 class UserController {
   public async getList(_req: Request, res: Response, next: NextFunction) {
@@ -50,6 +52,23 @@ class UserController {
       const jwtPayload = res.locals.jwtPayload as ITokenPayload;
       await userService.deleteMe(jwtPayload);
       res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async uploadAvatar(req: Request, res: Response, next: NextFunction) {
+    try {
+      const jwtPayload = req.res?.locals.jwtPayload as ITokenPayload;
+
+      if (!req.files || !req.files.avatar) {
+        throw new Error("No file uploaded");
+      }
+
+      const avatar = req.files.avatar as UploadedFile;
+      const user = await userService.uploadAvatar(jwtPayload, avatar);
+
+      const result = userPresenter.toPublicResDto(user);
+      res.status(201).json(result);
     } catch (e) {
       next(e);
     }

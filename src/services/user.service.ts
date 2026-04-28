@@ -2,6 +2,9 @@ import { ApiError } from "../errors/api-error";
 import { IUser } from "../interfaces/user.interface";
 import { userRepository } from "../repositories/user.repository";
 import { ITokenPayload } from "../interfaces/token.interface";
+import { UploadedFile } from "express-fileupload";
+import { s3Service } from "./s3.service";
+import { FileItemTypeEnum } from "../enums/file-item-type.enum";
 
 class UserService {
   public async getList(): Promise<IUser[]> {
@@ -46,6 +49,38 @@ class UserService {
     if (!deletedUser) {
       throw new ApiError("Пользователь не найден", 404);
     }
+  }
+  public async uploadAvatar(
+    jwtPayload: ITokenPayload,
+    file: UploadedFile,
+  ): Promise<IUser> {
+    const user = await userRepository.getById(jwtPayload.userId);
+
+    if (!user || !user._id) {
+      throw new ApiError("User or User ID not found", 404);
+    }
+
+    const userIdString = user._id.toString();
+
+    const avatar = await s3Service.uploadFile(
+      file,
+      FileItemTypeEnum.USER,
+      userIdString,
+    );
+
+    const updatedUser = await userRepository.updateById(userIdString, {
+      avatar,
+    });
+
+    if (!updatedUser) {
+      throw new ApiError("Update failed", 500);
+    }
+
+    if (user.avatar) {
+      await s3Service.deleteFile(user.avatar);
+    }
+
+    return updatedUser;
   }
 }
 

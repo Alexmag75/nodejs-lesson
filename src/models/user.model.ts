@@ -14,6 +14,7 @@ const userSchema = new Schema(
     isVerified: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
     lastVisit: { type: Date, default: Date.now },
+    avatar: { type: String, required: false },
   },
   {
     timestamps: true,
