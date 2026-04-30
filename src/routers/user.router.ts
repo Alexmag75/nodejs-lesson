@@ -9,7 +9,11 @@ import { fileMiddleware } from "../middleware/file.middleware";
 
 const router = Router();
 
-router.get("/", userController.getList);
+router.get(
+  "/",
+  commonMiddleware.isQueryValid(UserValidator.listQuery),
+  userController.getList,
+);
 
 router.get("/me", authMiddleware.checkAccessToken, userController.getMe);
 router.put(

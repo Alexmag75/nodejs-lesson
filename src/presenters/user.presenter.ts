@@ -1,5 +1,9 @@
 import { configs } from "../config/configs";
-import { IUser } from "../interfaces/user.interface";
+import {
+  IUser,
+  IUserListQuery,
+  IUserListResponse,
+} from "../interfaces/user.interface";
 
 class UserPresenter {
   toPublicResDto(entity: IUser) {
@@ -11,9 +15,20 @@ class UserPresenter {
       role: entity.role,
       avatar: entity.avatar
         ? `${configs.AWS_S3_ENDPOINT}/${entity.avatar}`
-        : null,
+        : undefined,
       isDeleted: entity.isDeleted,
       isVerified: entity.isVerified,
+    };
+  }
+  public toListResDto(
+    entities: IUser[],
+    total: number,
+    query: IUserListQuery,
+  ): IUserListResponse {
+    return {
+      data: entities.map((item) => this.toPublicResDto(item)),
+      total,
+      ...query,
     };
   }
 }

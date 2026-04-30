@@ -1,0 +1,200 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Bolgrad Lyceum API",
+    "description": "Полная документация API: Пользователи, Профили и Авторизация"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api/v1",
+  "tags": [
+    { "name": "Auth", "description": "Вход, регистрация, подтверждение почты и сессии" },
+    { "name": "User", "description": "Управление данными пользователей и личным профилем" }
+  ],
+  "schemes": ["http"],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Введите токен в формате: Bearer <token>"
+    }
+  },
+  "paths": {
+    "/auth/sign-up": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Регистрация нового пользователя",
+        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/UserCreate" } }],
+        "responses": { "201": { "description": "Пользователь создан" } }
+      }
+    },
+    "/auth/sign-in": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Вход в систему",
+        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/LoginDto" } }],
+        "responses": { "200": { "description": "Успешно", "schema": { "$ref": "#/definitions/TokenPair" } } }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Обновление токенов",
+        "description": "Передайте Refresh Token в заголовке Authorization",
+        "responses": { "200": { "description": "Новые токены", "schema": { "$ref": "#/definitions/TokenPair" } } }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Выход из текущей сессии",
+        "security": [{ "BearerAuth": [] }],
+        "responses": { "204": { "description": "Выход выполнен" } }
+      }
+    },
+    "/auth/logout-all": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Выход со всех устройств",
+        "security": [{ "BearerAuth": [] }],
+        "responses": { "204": { "description": "Все сессии завершены" } }
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Запрос на восстановление пароля (email)",
+        "parameters": [{ "in": "body", "name": "body", "schema": { "type": "object", "properties": { "email": { "type": "string" } } } }],
+        "responses": { "200": { "description": "Письмо отправлено" } }
+      },
+      "put": {
+        "tags": ["Auth"],
+        "summary": "Установка нового пароля",
+        "description": "Используется Action Token из письма",
+        "parameters": [{ "in": "body", "name": "body", "schema": { "type": "object", "properties": { "password": { "type": "string" } } } }],
+        "responses": { "200": { "description": "Пароль успешно изменен" } }
+      }
+    },
+    "/auth/change-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Смена пароля в личном кабинете",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/ChangePasswordDto" } }],
+        "responses": { "200": { "description": "Пароль обновлен" } }
+      }
+    },
+    "/auth/verify": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Подтверждение почты",
+        "description": "Используется Verify Token",
+        "responses": { "200": { "description": "Почта подтверждена" } }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Список всех пользователей",
+        "parameters": [
+          { "name": "page", "in": "query", "type": "integer", "default": 1 },
+          { "name": "limit", "in": "query", "type": "integer", "default": 10 },
+          { "name": "search", "in": "query", "type": "string" },
+          { "name": "orderBy", "in": "query", "type": "string" },
+          { "name": "order", "in": "query", "type": "string", "enum": ["asc", "desc"] }
+        ],
+        "responses": { "200": { "description": "Успешно", "schema": { "$ref": "#/definitions/UserListResponse" } } }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Мой профиль",
+        "security": [{ "BearerAuth": [] }],
+        "responses": { "200": { "description": "Данные профиля", "schema": { "$ref": "#/definitions/User" } } }
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Обновить мой профиль",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/UserUpdate" } }],
+        "responses": { "200": { "description": "Данные обновлены" } }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Удалить мой аккаунт",
+        "security": [{ "BearerAuth": [] }],
+        "responses": { "204": { "description": "Аккаунт удален" } }
+      }
+    },
+    "/users/me/avatar": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Загрузить аватар",
+        "security": [{ "BearerAuth": [] }],
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          { "name": "avatar", "in": "formData", "type": "file", "required": true, "description": "Файл изображения" }
+        ],
+        "responses": { "200": { "description": "Аватар обновлен" } }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "avatar": { "type": "string", "description": "URL аватара" }
+      }
+    },
+    "UserCreate": {
+      "type": "object",
+      "required": ["name", "email", "password"],
+      "properties": {
+        "name": { "type": "string", "example": "Ivan" },
+        "email": { "type": "string", "example": "test@test.com" },
+        "password": { "type": "string", "example": "Pass12345" }
+      }
+    },
+    "LoginDto": {
+      "type": "object",
+      "required": ["email", "password"],
+      "properties": {
+        "email": { "type": "string", "example": "test@test.com" },
+        "password": { "type": "string", "example": "Pass12345" }
+      }
+    },
+    "TokenPair": {
+      "type": "object",
+      "properties": {
+        "accessToken": { "type": "string" },
+        "refreshToken": { "type": "string" }
+      }
+    },
+    "ChangePasswordDto": {
+      "type": "object",
+      "required": ["oldPassword", "newPassword"],
+      "properties": {
+        "oldPassword": { "type": "string" },
+        "newPassword": { "type": "string" }
+      }
+    },
+    "UserUpdate": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "example": "Новое Имя" }
+      }
+    },
+    "UserListResponse": {
+      "type": "object",
+      "properties": {
+        "data": { "type": "array", "items": { "$ref": "#/definitions/User" } },
+        "total": { "type": "integer" }
+      }
+    }
+  }
+}

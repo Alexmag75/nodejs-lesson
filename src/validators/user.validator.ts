@@ -1,5 +1,7 @@
 import Joi from "joi";
 import { RoleEnum } from "../enums/role.enum";
+import { UserListOrderByEnum } from "../enums/user-list-order-by.enum";
+import { OrderEnum } from "../enums/order.enum";
 
 export const UserValidator = {
   create: Joi.object({
@@ -38,5 +40,16 @@ export const UserValidator = {
       "string.min": "New password must be at least 8 characters long",
       "any.required": "New password is required",
     }),
+  }),
+  listQuery: Joi.object({
+    limit: Joi.number().integer().min(1).max(100).default(10),
+    page: Joi.number().integer().min(1).default(1),
+    search: Joi.string().trim().lowercase().optional(),
+    order: Joi.string()
+      .valid(...Object.values(OrderEnum))
+      .default(OrderEnum.ASC),
+    orderBy: Joi.string()
+      .valid(...Object.values(UserListOrderByEnum))
+      .default(UserListOrderByEnum.NAME),
   }),
 };

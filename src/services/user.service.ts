@@ -1,14 +1,20 @@
 import { ApiError } from "../errors/api-error";
-import { IUser } from "../interfaces/user.interface";
+import {
+  IUser,
+  IUserListQuery,
+  IUserListResponse,
+} from "../interfaces/user.interface";
 import { userRepository } from "../repositories/user.repository";
 import { ITokenPayload } from "../interfaces/token.interface";
 import { UploadedFile } from "express-fileupload";
 import { s3Service } from "./s3.service";
 import { FileItemTypeEnum } from "../enums/file-item-type.enum";
+import { userPresenter } from "../presenters/user.presenter";
 
 class UserService {
-  public async getList(): Promise<IUser[]> {
-    return await userRepository.getList();
+  public async getList(query: IUserListQuery): Promise<IUserListResponse> {
+    const [entities, total] = await userRepository.getList(query);
+    return userPresenter.toListResDto(entities, total, query);
   }
 
   public async getById(userId: string): Promise<IUser> {

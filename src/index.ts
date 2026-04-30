@@ -1,7 +1,10 @@
 import dotenv from "dotenv";
 import fileUpload from "express-fileupload";
 dotenv.config();
-import express, { Request, Response } from "express";
+import swaggerUi from "swagger-ui-express";
+
+import swaggerDocument from "../docs/swagger.json";
+import express, { NextFunction, Request, Response } from "express";
 import { ApiError } from "./errors/api-error";
 import { userRouter } from "./routers/user.router";
 import { configs } from "./config/configs";
@@ -11,7 +14,13 @@ import { cronRunner } from "./crons";
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use((req: Request, _res: Response, next: NextFunction) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
 app.use((err: ApiError, _req: Request, res: Response) => {
   const status = err.status || 500;
   res.status(status).json({
