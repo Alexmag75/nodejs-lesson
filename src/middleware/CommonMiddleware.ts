@@ -30,7 +30,7 @@ class CommonMiddleware {
   }
 
   public isQueryValid(validator: ObjectSchema) {
-    return async (req: Request, res: Response, next: NextFunction) => {
+    return async (req: Request, _res: Response, next: NextFunction) => {
       try {
         req.query = await validator.validateAsync(req.query);
         next();

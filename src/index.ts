@@ -23,8 +23,10 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
 });
 app.use((err: ApiError, _req: Request, res: Response) => {
   const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
   res.status(status).json({
-    message: err.message || "Internal Server Error",
+    status: status,
+    message: message,
   });
 });
 app.use("/auth", authRouter);

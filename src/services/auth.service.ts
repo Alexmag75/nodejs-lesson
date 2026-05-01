@@ -134,7 +134,7 @@ class AuthService {
   public async forgotPasswordSendEmail(dto: IResetPasswordSend): Promise<void> {
     const user = await userRepository.getByEmail(dto.email as string);
     if (!user) {
-      throw new ApiError("User not found", 404);
+      throw new ApiError("Пользователя с таким email не существует", 404);
     }
 
     const token = tokenService.generateActionTokens(

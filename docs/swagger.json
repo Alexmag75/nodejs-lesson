@@ -3,13 +3,13 @@
   "info": {
     "version": "1.0.0",
     "title": "Bolgrad Lyceum API",
-    "description": "Полная документация API: Пользователи, Профили и Авторизация с обработкой ошибок"
+    "description": "Полная документация API с учетом Joi-валидации, Middleware и ApiError"
   },
-  "host": "localhost:5000",
+  "host": "0.0.0.0:3000",
   "basePath": "/api/v1",
   "tags": [
-    { "name": "Auth", "description": "Вход, регистрация и управление доступом" },
-    { "name": "User", "description": "Работа с данными пользователей" }
+    { "name": "Auth", "description": "Авторизация и управление доступом" },
+    { "name": "Users", "description": "Работа с профилями пользователей" }
   ],
   "schemes": ["http"],
   "securityDefinitions": {
@@ -17,161 +17,472 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "Введите токен в формате: Bearer <token>"
+      "description": "Введите токен в формате: Bearer <AccessToken>"
     }
   },
   "paths": {
     "/auth/sign-up": {
       "post": {
-        "tags": ["Auth"],
-        "summary": "Регистрация пользователя",
-        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/UserCreate" } }],
-        "responses": { "201": { "description": "Создано" } }
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Регистрация нового пользователя",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": { "$ref": "#/definitions/UserCreate" }
+          }
+        ],
+        "responses": {
+          "201": {"description": "Пользователь успешно создан","schema": {"$ref": "#/definitions/IUser"}},
+          "400": {"description": "Ошибка валидации (Joi)","schema": {"$ref": "#/definitions/Error"}}
+        }
       }
     },
     "/auth/sign-in": {
       "post": {
         "tags": ["Auth"],
         "summary": "Вход в систему",
-        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/LoginDto" } }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginDto"
+            }
+          }
+        ],
         "responses": {
-          "200": { "description": "Успешно", "schema": { "$ref": "#/definitions/TokenPair" } },
-          "401": { "description": "Неверные учетные данные (пароль)", "schema": { "$ref": "#/definitions/Error" } },
-          "404": { "description": "User не найден (email)", "schema": { "$ref": "#/definitions/Error" } }
+          "201": {"description": "Успешный вход", "schema": {"$ref": "#/definitions/AuthResponse"}},
+          "401": {"description": "Неверный логин или пароль","schema": {"$ref": "#/definitions/Error"}},
+          "404": {"description": "Пользователь не найден","schema": {"$ref": "#/definitions/Error"}}
         }
       }
     },
     "/auth/refresh": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Обновление токенов",
-        "responses": { "200": { "description": "Новые токены", "schema": { "$ref": "#/definitions/TokenPair" } } }
+        "summary": "Обновление пары токенов",
+        "description": "Требуется валидный Refresh Token",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Объект, содержащий Refresh токен",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "refreshToken"
+              ],
+              "properties": {"refreshToken": {"type": "string","example": "eyJhbGciOiJIUzI1Ni..."}}
+            }
+          }
+        ],
+        "responses": {
+          "201": {"description": "Токены обновлены","schema": {"$ref": "#/definitions/TokenPair"}},
+          "401": {"description": "Refresh Token невалиден, отсутствует или просрочен","schema": {"$ref": "#/definitions/Error"}}
+        }
       }
     },
     "/auth/logout": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Выход",
-        "security": [{ "BearerAuth": [] }],
-        "responses": { "204": { "description": "Выход выполнен" } }
+        "summary": "Выход из текущей сессии",
+        "description": "Удаляет Refresh токен данного пользователя из базы данных.",
+        "security": [ {"BearerAuth": []}],
+        "responses": {
+          "204": { "description": "Успешно" },
+          "401": { "description": "Refresh токен недействителен или отозван" }
+        }
       }
     },
     "/auth/logout-all": {
       "post": {
         "tags": ["Auth"],
         "summary": "Выход со всех устройств",
-        "security": [{ "BearerAuth": [] }],
-        "responses": { "204": { "description": "Все сессии завершены" } }
+        "description": "Удаляет ВСЕ сессии (пары токенов) данного пользователя из базы данных.",
+        "security": [{"BearerAuth": []}],
+        "responses": {
+          "204": {"description": "Все сессии успешно завершены."},
+          "401": {"description": "Ошибка авторизации","schema": {"$ref": "#/definitions/Error" }}
+        }
       }
     },
     "/auth/forgot-password": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Запрос на восстановление пароля",
-        "parameters": [{ "in": "body", "name": "body", "schema": { "type": "object", "properties": { "email": { "type": "string" } } } }],
-        "responses": { "200": { "description": "Письмо отправлено" } }
+        "summary": "Запрос на сброс пароля (отправка email)",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {"description": "Письмо для замены пароля отправлено"},
+          "404": {"description": "Пользователя с таким email не существует"}
+        }
       },
       "put": {
         "tags": ["Auth"],
         "summary": "Установка нового пароля",
-        "parameters": [{ "in": "body", "name": "body", "schema": { "type": "object", "properties": { "password": { "type": "string" } } } }],
-        "responses": { "200": { "description": "Пароль изменен" } }
+        "description": "Используется после получения письма для сброса пароля. Метод обновляет пароль и завершает все текущие сессии пользователя.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResetPasswordSet"
+            }
+          }
+        ],
+        "responses": {
+          "204": {"description": "Пароль успешно изменен. Все активные сессии пользователя завершены."},
+          "401": {"description": "Невалидный или просроченный Action Token","schema": {"$ref": "#/definitions/Error"}},
+          "400": {"description": "Ошибка валидации данных", "schema": {"$ref": "#/definitions/Error"}}
+        }
       }
     },
     "/auth/change-password": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Смена пароля",
+        "summary": "Смена пароля (для авторизованного пользователя)",
+        "description": "Позволяет сменить пароль, проверив текущую сессию и валидность новых данных.",
         "security": [{ "BearerAuth": [] }],
-        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/ChangePasswordDto" } }],
-        "responses": { "200": { "description": "Пароль обновлен" } }
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangePasswordDto"
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Пароль успешно изменен." },
+          "400": { "description": "Ошибка валидации (неверный формат данных)","schema": { "$ref": "#/definitions/Error" }},
+          "401": { "description": "Токен отсутствует или недействителен","schema": {"$ref": "#/definitions/Error" }},
+          "404": { "description": "Пользователь не найден","schema": {"$ref": "#/definitions/Error" }}
+        }
       }
     },
     "/auth/verify": {
       "patch": {
         "tags": ["Auth"],
-        "summary": "Подтверждение почты",
-        "responses": { "200": { "description": "Почта подтверждена" } }
-      }
-    },
-    "/users": {
-      "get": {
-        "tags": ["User"],
-        "summary": "Список всех пользователей",
+        "summary": "Подтверждение адреса электронной почты",
+        "description": "Используется для активации аккаунта через ссылку из письма.",
         "parameters": [
-          { "name": "page", "in": "query", "type": "integer" },
-          { "name": "limit", "in": "query", "type": "integer" },
-          { "name": "search", "in": "query", "type": "string" },
-          { "name": "orderBy", "in": "query", "type": "string" },
-          { "name": "order", "in": "query", "type": "string", "enum": ["asc", "desc"] }
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "token"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "Специальный Verify Email токен из письма",
+                  "example": "v_email_eyJhbGciOiJIUzI1Ni..."
+                }
+              }
+            }
+          }
         ],
-        "responses": { "200": { "description": "Успешно", "schema": { "$ref": "#/definitions/UserListResponse" } } }
+        "responses": {
+          "204": {"description": "Почта успешно подтверждена. Аккаунт активирован."},
+          "400": {"description": "Токен не предоставлен","schema": {"$ref": "#/definitions/Error" }},
+          "401": {"description": "Токен недействителен, просрочен или уже использован", "schema": {"$ref": "#/definitions/Error"}}
+        }
       }
     },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Получение списка пользователей",
+        "description": "Возвращает список только верифицированных пользователей. Поддерживает поиск по имени, сортировку и пагинацию.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Номер страницы",
+            "type": "integer",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Количество пользователей на странице",
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Поиск по имени (регистронезависимый)",
+            "type": "string"
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "По какому полю сортировать",
+            "type": "string",
+            "enum": [
+              "name",
+              "createdAt"
+            ]
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Направление сортировки",
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное получение списка",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/IUser"
+                  }
+                },
+                "total": {
+                  "type": "integer",
+                  "example": 100
+                },
+                "page": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "limit": {
+                  "type": "integer",
+                  "example": 10
+                }
+              }
+            }
+          },
+          "400": {"description": "Ошибка валидации параметров запроса", "schema": { "$ref": "#/definitions/Error" }}
+        }
+      }
+      },
     "/users/me": {
       "get": {
-        "tags": ["User"],
-        "summary": "Мой профиль",
-        "security": [{ "BearerAuth": [] }],
-        "responses": { "200": { "description": "Данные профиля", "schema": { "$ref": "#/definitions/User" } } }
+        "tags": [
+          "Users"
+        ],
+        "summary": "Получить данные своего профиля",
+        "description": "Возвращает данные пользователя, которому принадлежит Access токен.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {"description": "Данные профиля", "schema": {"$ref": "#/definitions/UserResponse" }},
+          "401": { "description": "Ошибка авторизации: токен отсутствует или невалиден", "schema": { "$ref": "#/definitions/Error" }},
+          "404": { "description": "Пользователь не найден", "schema": { "$ref": "#/definitions/Error" }}
+        }
       },
       "put": {
-        "tags": ["User"],
-        "summary": "Обновить профиль",
-        "security": [{ "BearerAuth": [] }],
-        "parameters": [{ "in": "body", "name": "body", "schema": { "$ref": "#/definitions/UserUpdate" } }],
-        "responses": { "200": { "description": "Обновлено" } }
+        "tags": [
+          "Users"
+        ],
+        "summary": "Обновить свой профиль",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UserUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Данные профиля успешно получены",
+            "schema": {
+              "$ref": "#/definitions/IUser"
+            }
+          },
+          "401": { "description": "Ошибка авторизации: токен отсутствует или невалиден", "schema": { "$ref": "#/definitions/Error" }},
+          "404": {
+            "description": "Пользователь не найден в базе",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       },
       "delete": {
-        "tags": ["User"],
-        "summary": "Удалить аккаунт",
-        "security": [{ "BearerAuth": [] }],
-        "responses": { "204": { "description": "Удалено" } }
+        "tags": [
+          "Users"
+        ],
+        "summary": "Удалить свой аккаунт",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {"description": "Аккаунт удален" },
+          "401": { "description": "Ошибка авторизации: токен отсутствует или невалиден", "schema": { "$ref": "#/definitions/Error" }},
+          "404": { "description": "Пользователь не найден", "schema": { "$ref": "#/definitions/Error" }}
+        }
+
       }
     },
     "/users/me/avatar": {
-      "post": {
-        "tags": ["User"],
-        "summary": "Загрузить аватар",
-        "security": [{ "BearerAuth": [] }],
-        "consumes": ["multipart/form-data"],
-        "parameters": [{ "name": "avatar", "in": "formData", "type": "file", "required": true }],
-        "responses": { "200": { "description": "Аватар загружен" } }
+        "post": {
+          "tags": ["Users"],
+          "summary": "Загрузить или обновить аватар",
+          "security": [{"BearerAuth": []}],
+          "consumes": [ "multipart/form-data"],
+          "parameters": [
+            {
+              "name": "avatar",
+              "in": "formData",
+              "type": "file",
+              "required": true
+            }
+          ],
+          "responses": {
+            "201": {"description": "Аватар обновлен","schema": {"$ref": "#/definitions/UserResponse" }},
+            "400": { "description": "Ошибка: Файл отсутствует, формат файла или размер слишком большой", "schema": { "$ref": "#/definitions/Error" }},
+            "401": { "description": "Ошибка авторизации: токен отсутствует или невалиден", "schema": { "$ref": "#/definitions/Error" }},
+            "404": { "description": "Пользователь не найден", "schema": { "$ref": "#/definitions/Error" }}
+          }
+        }
+      },
+    "/users/{userId}": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Получить пользователя по ID",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "MongoDB ObjectId"
+            }
+          ],
+          "responses": {
+            "200": {"description": "Пользователь найден","schema": {"$ref": "#/definitions/UserResponse" }},
+            "400": {"description": "Некорректный формат ID (Invalid Object ID)","schema": { "$ref": "#/definitions/Error" }},
+            "404": {"description": "Пользователь не найден","schema": { "$ref": "#/definitions/Error" }}
+          }
+        }
       }
-    }
   },
   "definitions": {
     "Error": {
       "type": "object",
       "properties": {
-        "message": { "type": "string", "example": "User не найден" },
-        "status": { "type": "integer", "example": 404 }
+        "message": { "type": "string", "example": "Invalid Object ID" },
+        "status": { "type": "integer", "description": "HTTP код ошибки" }
       }
     },
-    "User": {
+    "IUser": {
       "type": "object",
       "properties": {
-        "_id": { "type": "string" },
+        "id": { "type": "string" },
         "name": { "type": "string" },
         "email": { "type": "string" },
-        "avatar": { "type": "string" }
+        "age": { "type": "integer" },
+        "avatar?": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "isVerified": { "type": "boolean" },
+        "isDeleted": { "type": "boolean" },
+        "phone?": { "type": "string" },
+        "lastVisit": { "type": "Date" },
+        "createdAt": { "type": "Date" },
+        "updatedAt": { "type": "Date" }
+      }
+    },
+    "UserResponse": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "age": { "type": "integer" },
+        "avatar": { "type": "string" },
+        "role": { "type": "string" }
       }
     },
     "UserCreate": {
       "type": "object",
-      "required": ["name", "email", "password"],
+      "required": ["name", "email", "password", "age"],
       "properties": {
-        "name": { "type": "string", "example": "Ivan" },
-        "email": { "type": "string", "example": "test@test.com" },
-        "password": { "type": "string", "example": "Pass12345" }
+        "name": { "type": "string", "minLength": 3, "maxLength": 30 },
+        "email": { "type": "string" },
+        "password": { "type": "string", "minLength": 6 },
+        "age": { "type": "integer", "minimum": 1, "maximum": 120 },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] }
+      }
+    },
+    "UserUpdate": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 3 },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "age": { "type": "integer" }
       }
     },
     "LoginDto": {
       "type": "object",
       "required": ["email", "password"],
       "properties": {
-        "email": { "type": "string", "example": "test@test.com" },
-        "password": { "type": "string", "example": "Pass12345" }
+        "email": { "type": "string" },
+        "password": { "type": "string" }
+      }
+    },
+    "ChangePasswordDto": {
+      "type": "object",
+      "required": ["oldPassword", "password"],
+      "properties": {
+        "oldPassword": { "type": "string" },
+        "password": { "type": "string", "minLength": 8, "maxLength": 30, "description": "Новый пароль" }
+      }
+    },
+    "ResetPasswordSet": {
+      "type": "object",
+      "required": ["password", "token"],
+      "properties": {
+        "password": { "type": "string" },
+        "token": { "type": "string" }
       }
     },
     "TokenPair": {
@@ -181,26 +492,24 @@
         "refreshToken": { "type": "string" }
       }
     },
-    "ChangePasswordDto": {
-      "type": "object",
-      "required": ["oldPassword", "newPassword"],
-      "properties": {
-        "oldPassword": { "type": "string" },
-        "newPassword": { "type": "string" }
-      }
-    },
-    "UserUpdate": {
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" }
-      }
-    },
     "UserListResponse": {
       "type": "object",
       "properties": {
-        "data": { "type": "array", "items": { "$ref": "#/definitions/User" } },
-        "total": { "type": "integer" }
+        "data": { "type": "array", "items": { "$ref": "#/definitions/UserResponse" } },
+        "total": { "type": "integer" },
+        "page": { "type": "integer" }
       }
+    },
+    "AuthResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/IUser"
+        },"tokens": {
+          "$ref": "#/definitions/TokenPair"
+        }
+              }
     }
   }
+
 }
