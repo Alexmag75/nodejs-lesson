@@ -382,7 +382,16 @@
             "401": { "description": "Ошибка авторизации: токен отсутствует или невалиден", "schema": { "$ref": "#/definitions/Error" }},
             "404": { "description": "Пользователь не найден", "schema": { "$ref": "#/definitions/Error" }}
           }
+        },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Удалить текущий аватар",
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": {"description": "Аватар успешно удален", "schema": { "$ref": "#/definitions/UserResponse" } },
+          "401": { "description": "Не авторизован", "schema": { "$ref": "#/definitions/Error" } }
         }
+      }
       },
     "/users/{userId}": {
         "get": {

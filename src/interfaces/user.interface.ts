@@ -12,7 +12,7 @@ export interface IUser {
   isVerified: boolean;
   isDeleted: boolean;
   phone?: string;
-  avatar?: string;
+  avatar?: string | null;
   createdAt?: Date;
   updatedAt?: Date;
   lastVisit?: Date;
