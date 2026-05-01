@@ -197,8 +197,8 @@ class AuthService {
       );
       if (isMatched) {
         throw new ApiError(
-          "You cannot use a password that has been used in the last 180 days",
-          400,
+          "Вы не можете менять пароль чаще, чем раз в 180 дней.",
+          409,
         );
       }
     }

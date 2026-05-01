@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Bolgrad Lyceum API",
-    "description": "Полная документация API с учетом Joi-валидации, Middleware и ApiError"
+    "title": "Test API",
+    "description": "Документация API"
   },
   "host": "0.0.0.0:3000",
   "basePath": "/api/v1",
@@ -174,7 +174,8 @@
           "204": { "description": "Пароль успешно изменен." },
           "400": { "description": "Ошибка валидации (неверный формат данных)","schema": { "$ref": "#/definitions/Error" }},
           "401": { "description": "Токен отсутствует или недействителен","schema": {"$ref": "#/definitions/Error" }},
-          "404": { "description": "Пользователь не найден","schema": {"$ref": "#/definitions/Error" }}
+          "404": { "description": "Пользователь не найден","schema": {"$ref": "#/definitions/Error" }},
+          "409": { "description": "Вы не можете менять пароль чаще, чем раз в 180 дней","schema": {"$ref": "#/definitions/Error" }}
         }
       }
     },
